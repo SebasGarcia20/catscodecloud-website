@@ -41,9 +41,9 @@ function AnimatedParticle({ position, speed, direction }: {
     <mesh ref={meshRef} position={position}>
       <sphereGeometry args={[0.3, 8, 8]} />
       <meshBasicMaterial 
-        color="#00ff44" 
+        color="#2dd4bf" 
         transparent 
-        opacity={0.4}
+        opacity={0.3}
       />
     </mesh>
   )
