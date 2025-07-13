@@ -11,13 +11,13 @@ export default function Pricing() {
         {[
           {
             name: "Basic",
-            price: "$99",
+            price: "$300",
             features: ["1-page website", "Basic SEO", "Email support"],
             bg: "bg-gray-900",
           },
           {
             name: "Standard",
-            price: "$299",
+            price: "$499",
             features: [
               "5-page website",
               "SEO + Google setup",
