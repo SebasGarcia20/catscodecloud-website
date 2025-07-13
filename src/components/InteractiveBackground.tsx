@@ -1,44 +1,49 @@
 'use client'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useRef, useState, useEffect } from 'react'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
-// Component for individual green circles
-function GreenCircle({ position, mousePosition }: { position: [number, number, number], mousePosition: THREE.Vector3 }) {
+// Component for individual animated particles
+function AnimatedParticle({ position, speed, direction }: { 
+  position: [number, number, number], 
+  speed: number,
+  direction: [number, number, number]
+}) {
   const meshRef = useRef<THREE.Mesh>(null)
-  const [hovered, setHovered] = useState(false)
+  const initialPosition = useRef(new THREE.Vector3(...position))
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Calculate distance from mouse position
-      const distance = meshRef.current.position.distanceTo(mousePosition)
+      // Slow continuous movement
+      meshRef.current.position.x += direction[0] * speed * 0.01
+      meshRef.current.position.y += direction[1] * speed * 0.01
+      meshRef.current.position.z += direction[2] * speed * 0.01
       
-      // Scale based on distance from mouse
-      const scale = Math.max(1, 3 - distance * 0.3)
-      meshRef.current.scale.setScalar(scale)
+      // Reset position when particle goes too far
+      if (meshRef.current.position.x > 15) meshRef.current.position.x = -15
+      if (meshRef.current.position.x < -15) meshRef.current.position.x = 15
+      if (meshRef.current.position.y > 15) meshRef.current.position.y = -15
+      if (meshRef.current.position.y < -15) meshRef.current.position.y = 15
+      if (meshRef.current.position.z > 5) meshRef.current.position.z = -15
+      if (meshRef.current.position.z < -15) meshRef.current.position.z = 5
       
-      // Rotate the circle
-      meshRef.current.rotation.x += 0.01
-      meshRef.current.rotation.y += 0.01
+      // Subtle rotation
+      meshRef.current.rotation.x += 0.002
+      meshRef.current.rotation.y += 0.002
       
-      // Add subtle floating animation
-      meshRef.current.position.y += Math.sin(state.clock.elapsedTime + position[0]) * 0.001
+      // Gentle floating animation
+      meshRef.current.position.y += Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.001
     }
   })
 
   return (
-    <mesh
-      ref={meshRef}
-      position={position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <sphereGeometry args={[0.8, 16, 16]} />
+    <mesh ref={meshRef} position={position}>
+      <sphereGeometry args={[0.3, 8, 8]} />
       <meshBasicMaterial 
-        color={hovered ? "#00ff88" : "#00ff44"} 
+        color="#00ff44" 
         transparent 
-        opacity={0.9}
+        opacity={0.4}
       />
     </mesh>
   )
@@ -46,40 +51,34 @@ function GreenCircle({ position, mousePosition }: { position: [number, number, n
 
 // Component for the particle system
 function ParticleSystem() {
-  const { camera } = useThree()
-  const [mousePosition, setMousePosition] = useState(new THREE.Vector3())
-  
-  // Generate random positions for circles - positioned in front of camera
-  const circles = Array.from({ length: 20 }, () => [
-    (Math.random() - 0.5) * 10, // x
-    (Math.random() - 0.5) * 10, // y  
-    Math.random() * 5 - 8       // z - positioned in front of camera (negative z)
-  ] as [number, number, number])
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      // Convert mouse position to 3D world coordinates
-      const mouse = new THREE.Vector3()
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-      mouse.z = 0.5
-      
-      mouse.unproject(camera)
-      mouse.multiplyScalar(10)
-      setMousePosition(mouse)
+  // Generate particles with random positions, speeds, and directions
+  const particles = Array.from({ length: 40 }, () => {
+    const speed = Math.random() * 0.5 + 0.2 // Random speed between 0.2 and 0.7
+    const direction = [
+      (Math.random() - 0.5) * 2, // x direction
+      (Math.random() - 0.5) * 2, // y direction
+      (Math.random() - 0.5) * 2  // z direction
+    ] as [number, number, number]
+    
+    return {
+      position: [
+        (Math.random() - 0.5) * 20, // x
+        (Math.random() - 0.5) * 20, // y  
+        Math.random() * 10 - 15     // z
+      ] as [number, number, number],
+      speed,
+      direction
     }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [camera])
+  })
 
   return (
     <group>
-      {circles.map((position, index) => (
-        <GreenCircle 
+      {particles.map((particle, index) => (
+        <AnimatedParticle 
           key={index} 
-          position={position} 
-          mousePosition={mousePosition}
+          position={particle.position}
+          speed={particle.speed}
+          direction={particle.direction}
         />
       ))}
     </group>
@@ -93,8 +92,7 @@ export default function InteractiveBackground() {
         camera={{ position: [0, 0, 3], fov: 75 }}
         style={{ background: 'black' }}
       >
-        <ambientLight intensity={1} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
+        <ambientLight intensity={0.8} />
         <ParticleSystem />
       </Canvas>
     </div>
