@@ -4,6 +4,7 @@ import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
 import ContactForm from "@/components/ContactForm";
 import InteractiveBackground from "@/components/InteractiveBackground";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <About />
       <Services />
       <Pricing />
+      <Projects />
       <ContactForm />
     </main>
   );
