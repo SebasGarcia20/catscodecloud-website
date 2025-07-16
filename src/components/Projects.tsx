@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 export default function Projects() {
   return (
     <section
-      className="flex flex-col items-center justify-center text-center px-6 py-0
-     space-y-6 w-full h-screen"
+      className="flex flex-col items-center justify-center text-center px-6 py-20
+     space-y-6 w-full min-h-screen"
     >
       <h2 className="text-3xl md:text-4xl font-bold text-teal-400 mb-8">
         Our Web Projects
       </h2>
       <p className="text-lg text-gray-300 max-w-2xl mb-10">
-        Explore some of the modern, fast, and SEO-ready websites we’ve crafted
+        Explore some of the modern, fast, and SEO-ready websites we've crafted
         for our clients. Each project blends code and creativity to help
         businesses grow online.
       </p>
