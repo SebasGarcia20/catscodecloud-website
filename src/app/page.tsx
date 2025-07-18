@@ -3,8 +3,9 @@ import About from "@/components/About";
 import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
 import ContactForm from "@/components/ContactForm";
-import InteractiveBackground from "@/components/InteractiveBackground";
 import Projects from "@/components/Projects";
+import Footer from "@/components/Footer";
+import InteractiveBackground from "@/components/InteractiveBackground";
 
 export default function Home() {
   return (
@@ -13,9 +14,10 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Pricing />
       <Projects />
+      <Pricing />
       <ContactForm />
+      <Footer />
     </main>
   );
 }

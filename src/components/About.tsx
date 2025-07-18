@@ -2,9 +2,9 @@ import { BriefcaseBusiness, Handshake, Sun } from "lucide-react";
 
 export default function About() {
   return (
-    <section className="px-6 py-20 space-y-10 max-w-5xl mx-auto text-center">
+    <section id="about" className="px-6 py-20 space-y-10 max-w-5xl mx-auto text-center">
       <h2 className="text-3xl md:text-4xl font-bold text-white">
-        Hello! We’re CatsCodeCloud.
+        Hello! We're CatsCodeCloud.
       </h2>
       <p className="text-md md:text-lg text-gray-300">
         We craft modern, fast and SEO-ready websites for local businesses in
