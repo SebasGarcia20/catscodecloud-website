@@ -23,7 +23,7 @@ export default function Testimonials() {
       business: "Pitaya Mexican Restaurant",
       role: "Business Owner",
       content: "Our new website has increased our online orders by 40%! The design is modern, the ordering system works perfectly, and the SEO has us ranking on Google. Highly recommended!",
-      rating: 5,
+      rating: 4,
       image: "/images/testimonials/carlos.jpg"
     }
   ];
