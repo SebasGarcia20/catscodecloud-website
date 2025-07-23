@@ -1,9 +1,10 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import Projects from "@/components/Projects";
 import Pricing from "@/components/Pricing";
 import ContactForm from "@/components/ContactForm";
-import Projects from "@/components/Projects";
 import Footer from "@/components/Footer";
 import InteractiveBackground from "@/components/InteractiveBackground";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
+      <Testimonials />
       <Projects />
       <Pricing />
       <ContactForm />
