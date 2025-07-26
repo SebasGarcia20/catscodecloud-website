@@ -7,6 +7,7 @@ import Pricing from "@/components/Pricing";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import InteractiveBackground from "@/components/InteractiveBackground";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Pricing />
       <ContactForm />
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }
