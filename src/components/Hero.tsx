@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 export default function Hero() {
   const handleWhatsAppClick = () => {
@@ -12,8 +13,19 @@ export default function Hero() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center text-center px-6 py-0 space-y-8 w-full h-screen">
+    <section id="home" className="flex flex-col items-center justify-center text-center px-6 py-0 space-y-8 w-full h-screen">
       <div className="space-y-6 max-w-4xl">
+        {/* Logo */}
+        <div className="flex justify-center mb-4">
+          <Image
+            src="/images/Logo/Asset 1.png"
+            alt="CatsCodeCloud Logo"
+            width={200}
+            height={90}
+            className="w-32 md:w-48 h-auto"
+          />
+        </div>
+        
         <h1 className="text-4xl md:text-6xl font-bold text-teal-400 leading-tight">
           CatsCodeCloud
         </h1>

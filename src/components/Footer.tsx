@@ -1,6 +1,6 @@
 'use client'
 
-import { Mail, Phone, MapPin, Github, Linkedin, X } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, X, Instagram } from "lucide-react";
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -26,6 +26,9 @@ export default function Footer() {
             <div className="flex space-x-4">
               <a href="https://github.com/CatsCodeCloud" target="_blank" className="text-gray-400 hover:text-teal-400 transition-colors">
                 <Github size={20} />
+              </a>
+              <a href="https://www.instagram.com/catscodecloud/" target="_blank" className="text-gray-400 hover:text-teal-400 transition-colors">
+                <Instagram size={20} />
               </a>
              {/*  <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                 <Linkedin size={20} />

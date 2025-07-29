@@ -12,9 +12,10 @@ export default function Pricing() {
           {
             name: "Starter",
             price: "$350",
-            color: "bg-green-900/20 backdrop-blur-sm border-green-400/40",
+            color: "bg-teal-100/20 backdrop-blur-sm border-teal-300/40",
+            hoverColor: "hover:shadow-lg hover:shadow-teal-300/20 hover:border-teal-300/60",
             badge: "🚀",
-            badgeColor: "bg-teal-500/20 text-teal-300",
+            badgeColor: "bg-teal-400/20 text-teal-600",
             description:
               "Perfect for small businesses or personal brands needing a simple and professional online presence.",
             features: [
@@ -28,13 +29,15 @@ export default function Pricing() {
             ],
             highlight:
               "Great for getting online quickly with style and clarity.",
+            isPopular: false,
           },
           {
             name: "Professional",
             price: "$650",
-            color: "bg-teal-600/20 backdrop-blur-sm border-gray-500/50",
+            color: "bg-teal-500/20 backdrop-blur-sm border-teal-400/50",
+            hoverColor: "hover:shadow-xl hover:shadow-teal-400/30 hover:border-teal-400/80 hover:scale-105 transition-all duration-300",
             badge: "⭐",
-            badgeColor: "bg-teal-600/20 text-teal-200",
+            badgeColor: "bg-teal-500/20 text-teal-200",
             description:
               "Ideal for businesses looking to expand their digital presence and attract more customers.",
             features: [
@@ -50,11 +53,13 @@ export default function Pricing() {
             ],
             highlight:
               "Recommended for growing businesses wanting more flexibility and features.",
+            isPopular: true,
           },
           {
             name: "Premium Branding",
             price: "$950+",
             color: "bg-gray-900/70 backdrop-blur-sm border-teal-600/70",
+            hoverColor: "hover:shadow-lg hover:shadow-teal-600/20 hover:border-teal-600/90",
             badge: "💎",
             badgeColor: "bg-teal-700/20 text-teal-100",
             description:
@@ -71,9 +76,22 @@ export default function Pricing() {
             ],
             highlight:
               "Best for businesses that want a full-service launch with professional branding.",
+            isPopular: false,
           },
         ].map((plan, i) => (
-          <Card key={i} className={`${plan.color} text-white border-2`}>
+          <Card 
+            key={i} 
+            className={`${plan.color} ${plan.hoverColor} text-white border-2 relative transition-all duration-300 ${
+              plan.isPopular ? 'ring-2 ring-teal-400/50' : ''
+            }`}
+          >
+            {plan.isPopular && (
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-teal-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                  ⭐ Most Popular
+                </span>
+              </div>
+            )}
             <CardContent className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div className={`${plan.badgeColor} px-3 py-1 rounded-full text-sm font-semibold`}>
@@ -98,7 +116,7 @@ export default function Pricing() {
               <div className="bg-black/40 p-3 rounded-lg">
                 <p className="text-sm text-teal-300 italic">{plan.highlight}</p>
               </div>
-              <Button className="bg-teal-400 text-black w-full hover:bg-teal-300">
+              <Button className="bg-teal-400 text-black w-full hover:bg-teal-300 transition-colors duration-200">
                 Choose {plan.name}
               </Button>
             </CardContent>

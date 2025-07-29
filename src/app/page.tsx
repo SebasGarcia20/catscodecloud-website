@@ -8,11 +8,13 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import InteractiveBackground from "@/components/InteractiveBackground";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import TopNavBar from "@/components/TopNavBar";
 
 export default function Home() {
   return (
     <main className="text-white min-h-screen font-sans relative">
       <InteractiveBackground />
+      <TopNavBar />
       <Hero />
       <About />
       <Services />
