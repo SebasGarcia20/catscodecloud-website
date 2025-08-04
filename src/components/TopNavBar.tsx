@@ -80,7 +80,7 @@ export default function TopNavBar() {
             {/* Logo */}
             <div className="flex items-center">
               <Image
-                src="/images/Logo/Asset 1.png"
+                src="/images/Logo/asset 4.png"
                 alt="CatsCodeCloud Logo"
                 width={100}
                 height={40}
