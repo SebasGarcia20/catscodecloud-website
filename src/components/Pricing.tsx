@@ -10,14 +10,14 @@ export default function Pricing() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           {
-            name: "Starter",
-            price: "$350",
+            name: "Essential",
+            price: "$1,000",
             color: "bg-teal-100/20 backdrop-blur-sm border-teal-300/40",
             hoverColor: "hover:shadow-lg hover:shadow-teal-300/20 hover:border-teal-300/60",
             badge: "🚀",
             badgeColor: "bg-teal-400/20 text-teal-600",
             description:
-              "Perfect for small businesses or personal brands needing a simple and professional online presence.",
+              "Perfect for entrepreneurs and small businesses who need a professional, high-impact online presence to start attracting clients fast.",
             features: [
               "1-page responsive website (landing style)",
               "Custom design aligned with your brand",
@@ -25,21 +25,23 @@ export default function Pricing() {
               "Contact form + Google Maps",
               "WhatsApp or phone call integration",
               "Basic SEO optimization",
-              "Delivery in 5 business days",
+              "Optimized for fast loading speed",
+              "1 round of revisions included",
+              "Delivery in 5–7 business days",
             ],
             highlight:
-              "Great for getting online quickly with style and clarity.",
+              "Perfect for getting online quickly with professional impact and fast results.",
             isPopular: false,
           },
           {
             name: "Professional",
-            price: "$650",
+            price: "$1,400",
             color: "bg-teal-500/20 backdrop-blur-sm border-teal-400/50",
             hoverColor: "hover:shadow-xl hover:shadow-teal-400/30 hover:border-teal-400/80 hover:scale-105 transition-all duration-300",
             badge: "⭐",
             badgeColor: "bg-teal-500/20 text-teal-200",
             description:
-              "Ideal for businesses looking to expand their digital presence and attract more customers.",
+              "Designed for growing businesses that need a feature-rich website to convert more visitors into customers.",
             features: [
               "Up to 5 custom pages (Home, Services/Products, About, Contact, Gallery/Testimonials)",
               "Fully responsive & mobile-friendly",
@@ -48,34 +50,38 @@ export default function Pricing() {
               "Social media, WhatsApp, and contact integrations",
               "Advanced SEO setup",
               "Google Analytics + Meta Pixel tracking",
-              "1 round of revisions",
+              "Performance optimization (speed + security)",
+              "Basic on-page SEO copywriting support",
+              "2 rounds of revisions",
               "Delivery in 7–10 business days",
             ],
             highlight:
-              "Recommended for growing businesses wanting more flexibility and features.",
+              "The smart choice for businesses ready to scale and convert visitors into loyal customers.",
             isPopular: true,
           },
           {
             name: "Premium Branding",
-            price: "$950+",
+            price: "$1,900+",
             color: "bg-gray-900/70 backdrop-blur-sm border-teal-600/70",
             hoverColor: "hover:shadow-lg hover:shadow-teal-600/20 hover:border-teal-600/90",
             badge: "💎",
             badgeColor: "bg-teal-700/20 text-teal-100",
             description:
-              "A complete package for those who want to build a powerful and consistent online brand.",
+              "The ultimate package for businesses ready to launch a complete online presence with professional branding, marketing assets, and a premium website experience.",
             features: [
               "All features from the Professional Package",
               "Custom logo design + brand color palette & typography",
               "Social media content templates (Instagram/Facebook)",
               "Promo landing page for special campaigns (optional)",
               "Multi-language support (if needed)",
-              "2 rounds of revisions",
+              "30 days of post-launch support (minor fixes & guidance)",
+              "Optional brand strategy session (1 hour)",
+              "Up to 3 rounds of revisions",
               "Hosting and domain setup support",
               "Delivery in 10–14 business days",
             ],
             highlight:
-              "Best for businesses that want a full-service launch with professional branding.",
+              "The complete solution for businesses that demand excellence and want to dominate their market.",
             isPopular: false,
           },
         ].map((plan, i) => (
