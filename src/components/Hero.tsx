@@ -18,7 +18,7 @@ export default function Hero() {
         {/* Logo */}
         <div className="flex justify-center mb-4">
           <Image
-            src="/images/Logo/asset 4.png"
+            src="/images/Logo/logoCats.png"
             alt="CatsCodeCloud Logo"
             width={200}
             height={90}
