@@ -108,11 +108,11 @@ export default function TopNavBar() {
             {/* Logo */}
             <div className="flex items-center">
               <Image
-                src="/images/Logo/asset 4.png"
+                src="/images/Logo/logoCats.png"
                 alt="CatsCodeCloud Logo"
-                width={100}
-                height={40}
-                className="w-8 h-8 md:w-10 md:h-10 mr-2"
+                width={120}
+                height={54}
+                className="w-12 h-auto md:w-12 md:h-auto mr-2"
               />
               <div className="text-xl md:text-2xl font-bold text-teal-400">
                 CatsCodeCloud
