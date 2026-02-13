@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Quieres ser mi San Valentín? 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-start: #0b0b14;
+      --bg-end: #1b1230;
+      --pink: #ff4d8d;
+      --pink-soft: rgba(255, 77, 141, 0.4);
+      --purple: #a855f7;
+      --purple-soft: rgba(168, 85, 247, 0.35);
+      --white: rgba(255, 255, 255, 0.95);
+      --white-muted: rgba(255, 255, 255, 0.75);
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --shadow-glow: 0 0 40px rgba(255, 77, 141, 0.25);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    .hidden { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(160deg, var(--bg-start) 0%, var(--bg-end) 50%, #0f0a1a 100%);
+      min-height: 100vh;
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Intro overlay */
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--bg-start), var(--bg-end));
+      opacity: 1;
+      transition: opacity 0.8s ease-out;
+      pointer-events: none;
+    }
+    .intro.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .intro__text {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 5vw, 2.25rem);
+      font-weight: 400;
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--white);
+      text-shadow: 0 0 30px var(--pink-soft);
+    }
+
+    /* Floating hearts (background) */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart-float {
+      position: absolute;
+      font-size: 1.25rem;
+      opacity: 0.15;
+      animation: floatHeart 12s ease-in-out infinite;
+    }
+    .heart-float:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .heart-float:nth-child(2) { left: 80%; top: 15%; animation-delay: -2s; }
+    .heart-float:nth-child(3) { left: 25%; top: 60%; animation-delay: -4s; }
+    .heart-float:nth-child(4) { left: 70%; top: 55%; animation-delay: -1s; }
+    .heart-float:nth-child(5) { left: 50%; top: 85%; animation-delay: -3s; }
+    .heart-float:nth-child(6) { left: 15%; top: 75%; animation-delay: -5s; }
+    .heart-float:nth-child(7) { left: 90%; top: 35%; animation-delay: -2.5s; }
+    @keyframes floatHeart {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+      25% { transform: translate(10px, -15px) scale(1.1); opacity: 0.2; }
+      50% { transform: translate(-5px, -25px) scale(0.95); opacity: 0.15; }
+      75% { transform: translate(15px, -10px) scale(1.05); opacity: 0.18; }
+    }
+
+    /* Blob */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.2;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .blob-1 { width: 400px; height: 400px; background: var(--pink); top: -100px; right: -100px; animation: blob 15s ease-in-out infinite; }
+    .blob-2 { width: 300px; height: 300px; background: var(--purple); bottom: -80px; left: -80px; animation: blob 18s ease-in-out infinite reverse; animation-delay: -5s; }
+    @keyframes blob {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-30px, 30px); }
+    }
+
+    .page { position: relative; z-index: 1; min-height: 100vh; padding: 1.5rem; padding-bottom: 3rem; }
+
+    /* Music button */
+    .music-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      color: var(--white-muted);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+    }
+    .music-btn:hover, .music-btn:focus {
+      color: var(--white);
+      border-color: var(--pink-soft);
+      box-shadow: 0 0 20px var(--pink-soft);
+      outline: none;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      animation: fadeSlide 1s ease-out;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--white), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero__subtitle {
+      font-size: 1.1rem;
+      color: var(--white-muted);
+      font-weight: 300;
+      max-width: 320px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Gallery */
+    .gallery {
+      padding: 2.5rem 0;
+      animation: fadeSlide 1s ease-out 0.2s both;
+    }
+    .gallery__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--white-muted);
+    }
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) {
+      .gallery__grid { grid-template-columns: repeat(3, 1fr); max-width: 640px; }
+    }
+    .gallery__item {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease-out;
+    }
+    .gallery__item:hover img { transform: scale(1.05); }
+    .gallery__fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      opacity: 0.6;
+      background: linear-gradient(135deg, var(--pink-soft), var(--purple-soft));
+    }
+
+    /* Main card */
+    .card-wrap {
+      max-width: 420px;
+      margin: 0 auto 2rem;
+      animation: fadeSlide 1s ease-out 0.4s both;
+    }
+    .card {
+      background: rgba(255, 77, 141, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 77, 141, 0.25);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      transition: box-shadow 0.4s ease-out;
+    }
+    .card--glow { box-shadow: var(--shadow-glow), 0 25px 50px rgba(0,0,0,0.2); }
+    .card__img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 16px;
+      margin: 0 auto 1.25rem;
+      display: block;
+      border: 2px solid rgba(255, 77, 141, 0.3);
+      object-fit: cover;
+      aspect-ratio: 1;
+    }
+    .card__question {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    .card__message {
+      font-size: 1.25rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease-out;
+    }
+    .card__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      min-height: 80px;
+    }
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.25s ease-out, box-shadow 0.3s ease-out, background 0.3s ease-out;
+    }
+    .btn:focus { outline: 2px solid var(--pink); outline-offset: 4px; }
+    .btn--yes {
+      background: linear-gradient(135deg, var(--pink), #e91e63);
+      color: white;
+      box-shadow: 0 8px 24px var(--pink-soft);
+    }
+    .btn--yes:hover, .btn--yes:focus-visible {
+      transform: scale(1.05);
+      box-shadow: 0 12px 32px var(--pink-soft);
+    }
+    .btn--yes.grow { animation: yesGrow 0.5s ease-out; }
+    @keyframes yesGrow {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1.05); }
+    }
+    .btn--no {
+      background: var(--glass);
+      color: var(--white-muted);
+      border: 1px solid var(--glass-border);
+    }
+    .btn--no:hover, .btn--no:focus-visible {
+      color: var(--white);
+      border-color: var(--pink-soft);
+    }
+    .btn--no.runaway { transition: left 0.3s ease-out, top 0.3s ease-out; }
+
+    /* Our plan (after Yes) */
+    .our-plan {
+      margin-top: 1.5rem;
+      text-align: center;
+      animation: fadeSlide 0.6s ease-out;
+    }
+    .our-plan__title {
+      font-size: 0.9rem;
+      color: var(--white-muted);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .our-plan__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .chip {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--white);
+      font-size: 0.95rem;
+      animation: chipIn 0.5s ease-out backwards;
+    }
+    .chip:nth-child(1) { animation-delay: 0.1s; }
+    .chip:nth-child(2) { animation-delay: 0.2s; }
+    .chip:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes chipIn {
+      from { opacity: 0; transform: scale(0.8) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .hug-btn {
+      margin-top: 1.25rem;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      background: var(--purple-soft);
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.25s ease-out, box-shadow 0.3s ease-out;
+    }
+    .hug-btn:hover, .hug-btn:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 24px var(--purple-soft);
+      outline: none;
+    }
+
+    /* Confetti / celebration container */
+    #celebration {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 500;
+    }
+    .celeb-item {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: celebFall 3s ease-out forwards;
+      opacity: 1;
+    }
+    @keyframes celebFall {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0.3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="intro" id="intro" aria-hidden="false">
+    <p class="intro__text">Para la Niña mas hermosa del mundo 💌</p>
+  </div>
+
+  <button type="button" class="music-btn" id="musicBtn" aria-label="Activar música de fondo">Activar música 🎵</button>
+
+  <div class="hearts-bg" aria-hidden="true">
+    <span class="heart-float">💖</span>
+    <span class="heart-float">💗</span>
+    <span class="heart-float">💕</span>
+    <span class="heart-float">💖</span>
+    <span class="heart-float">💗</span>
+    <span class="heart-float">💕</span>
+    <span class="heart-float">💖</span>
+  </div>
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+
+  <main class="page">
+    <section class="hero">
+      <h1 class="hero__title">¿Quieres ser mi San Valentín? 💖</h1>
+      <p class="hero__subtitle" id="subtitle">Cada momento contigo es especial. Este es para ti.</p>
+    </section>
+
+    <section class="gallery" aria-label="Galería de fotos">
+      <h2 class="gallery__title">Nuestros recuerdos</h2>
+      <div class="gallery__grid" id="gallery"></div>
+    </section>
+
+    <div class="card-wrap">
+      <div class="card" id="card">
+        <img class="card__img" src="https://media1.tenor.com/m/QaPEi-tcFXQAAAAd/gato-besando-a-la-camara.gif" alt="Nosotros 💖" />
+        <p class="card__question" id="question">¿Quieres ser mi San Valentín?</p>
+        <p class="card__message" id="message" aria-live="polite"></p>
+        <div class="card__buttons" id="buttons">
+          <button type="button" class="btn btn--yes" id="btnYes" aria-label="Decir que sí">Sí 💖</button>
+          <button type="button" class="btn btn--no" id="btnNo" aria-label="Decir que no">No 🙈</button>
+        </div>
+        <div class="our-plan hidden" id="ourPlan">
+          <p class="our-plan__title">Nuestro plan</p>
+          <div class="our-plan__chips" id="chips"></div>
+          <button type="button" class="hug-btn" id="hugBtn" aria-label="Enviar un abrazo virtual">Festejar nuesrto amor 🤗</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="celebration"></div>
+
+  <audio id="bgMusic" preload="metadata" loop>
+    <source src="/assets/Corazon%20de%20Melon%20-%20Trio%20Los%20Panchos.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    // ========== PERSONALIZACIÓN (edita estos valores) ==========
+    const herName = "Mi Corazón de Melón";
+    const myName = "SEBAS";
+    const photos = [
+      "/images/Image from Facebook.jpg",
+      "/images/Image from Facebook (1).jpg",
+      "/images/Image from Facebook (2).jpg",
+      "/images/Image from Facebook (3).jpg",
+      "/images/Image from Facebook (4).jpg",
+      "/images/Image from Facebook (5).jpg",
+      "/images/Image from Facebook (6).jpg",
+      "/images/Image from Facebook (7).jpg"
+    ];
+    const yesMessage = "Sabía que dirías que sí 🥺💘";
+    const planChips = ["Viaje a Sangil ✈️", "Helado 🍦", "Película 🎬", "Festejar nuesrto amor 🤗", "Cena 🍝"];
+    const noMessages = [
+      "¿Estás segura? 🥺",
+      "Piénsalo otra vez 😳",
+      "Te prometo que lo pasaremos increíble 💘",
+      "Última oportunidad 🙈",
+      "Espero que te guste mi propuesta 🥺",
+      "Mira esos recuerdos 🥺",
+      "Mi corazón está ahí 💖",
+      "Vale… ¿y si dices que sí? 😏"
+    ];
+    const emojis = ["💖", "✨", "🌹", "😍", "💕", "💗", "💘", "🌸"];
+
+    // ========== DOM ==========
+    const intro = document.getElementById("intro");
+    const musicBtn = document.getElementById("musicBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    const subtitle = document.getElementById("subtitle");
+    const gallery = document.getElementById("gallery");
+    const card = document.getElementById("card");
+    const question = document.getElementById("question");
+    const message = document.getElementById("message");
+    const buttons = document.getElementById("buttons");
+    const btnYes = document.getElementById("btnYes");
+    const btnNo = document.getElementById("btnNo");
+    const ourPlan = document.getElementById("ourPlan");
+    const chipsContainer = document.getElementById("chips");
+    const hugBtn = document.getElementById("hugBtn");
+    const celebration = document.getElementById("celebration");
+
+    // ========== State ==========
+    let noClicks = 0;
+    let saidYes = false;
+
+    // ========== Intro ==========
+    subtitle.textContent = "Cada momento contigo es especial, " + herName + ". Este es para ti.";
+    setTimeout(function () {
+      intro.classList.add("hidden");
+      intro.setAttribute("aria-hidden", "true");
+      setTimeout(function () { intro.style.display = "none"; }, 800);
+    }, 3000);
+
+    // ========== Gallery ==========
+    (function () {
+      photos.forEach(function (src, i) {
+        var item = document.createElement("div");
+        item.className = "gallery__item";
+        var img = document.createElement("img");
+        img.src = src;
+        img.alt = "Recuerdo " + (i + 1);
+        img.loading = "lazy";
+        var fallback = document.createElement("div");
+        fallback.className = "gallery__fallback";
+        fallback.textContent = "💖";
+        img.onerror = function () {
+          img.style.display = "none";
+          item.appendChild(fallback);
+        };
+        item.appendChild(img);
+        gallery.appendChild(item);
+      });
+    })();
+
+    // ========== Celebration (DOM confetti) ==========
+    function runCelebration() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      for (var i = 0; i < 50; i++) {
+        (function (j) {
+          setTimeout(function () {
+            var el = document.createElement("span");
+            el.className = "celeb-item";
+            el.textContent = emojis[j % emojis.length];
+            el.style.left = Math.random() * w + "px";
+            el.style.top = "-20px";
+            el.style.setProperty("--dx", (Math.random() - 0.5) * 200 + "px");
+            el.style.animationDuration = (2 + Math.random() * 2) + "s";
+            celebration.appendChild(el);
+            setTimeout(function () { el.remove(); }, 5000);
+          }, j * 40);
+        })(i);
+      }
+    }
+
+    function runHearts() {
+      for (var i = 0; i < 15; i++) {
+        (function (j) {
+          setTimeout(function () {
+            var el = document.createElement("span");
+            el.className = "celeb-item";
+            el.textContent = "💖";
+            el.style.left = Math.random() * window.innerWidth + "px";
+            el.style.top = window.innerHeight * 0.5 + "px";
+            el.style.animationDuration = "2s";
+            celebration.appendChild(el);
+            setTimeout(function () { el.remove(); }, 3000);
+          }, j * 100);
+        })(i);
+      }
+    }
+
+    // ========== Yes flow ==========
+    function onYes() {
+      if (saidYes) return;
+      saidYes = true;
+      runCelebration();
+      question.textContent = "";
+      message.textContent = yesMessage;
+      btnYes.style.display = "none";
+      btnNo.style.display = "none";
+      card.classList.add("card--glow");
+      ourPlan.classList.remove("hidden");
+      planChips.forEach(function (text) {
+        var chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = text;
+        chipsContainer.appendChild(chip);
+      });
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = ctx.createOscillator();
+        var g = ctx.createGain();
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.frequency.value = 523;
+        g.gain.setValueAtTime(0.1, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.2);
+      } catch (e) {}
+    }
+
+    btnYes.addEventListener("click", onYes);
+    btnYes.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") onYes(); });
+
+    // ========== No flow ==========
+    function moveNoButton() {
+      var rect = buttons.getBoundingClientRect();
+      var btnRect = btnNo.getBoundingClientRect();
+      var maxX = rect.width - btnRect.width - 16;
+      var maxY = rect.height - btnRect.height - 16;
+      if (maxX < 0) maxX = 0;
+      if (maxY < 0) maxY = 0;
+      var x = Math.random() * maxX;
+      var y = Math.random() * maxY;
+      btnNo.style.position = "absolute";
+      btnNo.style.left = x + "px";
+      btnNo.style.top = y + "px";
+      btnNo.classList.add("runaway");
+    }
+
+    function onNo() {
+      if (saidYes) return;
+      message.textContent = noMessages[Math.min(noClicks, noMessages.length - 1)];
+      noClicks++;
+      btnYes.classList.add("grow");
+      setTimeout(function () { btnYes.classList.remove("grow"); }, 500);
+      card.classList.add("card--glow");
+      setTimeout(function () { card.classList.remove("card--glow"); }, 600);
+      if (window.navigator && navigator.vibrate) navigator.vibrate(30);
+      moveNoButton();
+    }
+
+    btnNo.addEventListener("click", onNo);
+    btnNo.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNo(); } });
+
+    // ========== Hug ==========
+    hugBtn.addEventListener("click", function () {
+      runHearts();
+      if (window.navigator && navigator.vibrate) navigator.vibrate([50, 30, 50]);
+    });
+    hugBtn.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); runHearts(); if (navigator.vibrate) navigator.vibrate([50, 30, 50]); }
+    });
+
+    // ========== Música (solo tras gesto del usuario) ==========
+    bgMusic.addEventListener("error", function () {
+      musicBtn.textContent = "Activar música 🎵";
+      musicBtn.title = "Añade public/assets/music.mp3 para activar la música";
+    });
+    musicBtn.addEventListener("click", function () {
+      if (bgMusic.paused) {
+        var src = (bgMusic.querySelector("source") && bgMusic.querySelector("source").src) || bgMusic.src;
+        if (!src || src.endsWith("/")) {
+          musicBtn.textContent = "Sin archivo (añade /assets/music.mp3)";
+          return;
+        }
+        var p = bgMusic.play();
+        if (p && typeof p.then === "function") {
+          p.then(function () {
+            musicBtn.textContent = "Pausar música 🎵";
+            musicBtn.title = "";
+          }).catch(function () {
+            musicBtn.textContent = "Activar música 🎵";
+            musicBtn.title = "No se pudo reproducir. ¿Existe public/assets/music.mp3?";
+          });
+        } else {
+          musicBtn.textContent = "Pausar música 🎵";
+        }
+      } else {
+        bgMusic.pause();
+        musicBtn.textContent = "Activar música 🎵";
+        musicBtn.title = "";
+      }
+    });
+  </script>
+
+  <!--
+  ========== CÓMO PERSONALIZAR ==========
+  1. TEXTOS: Edita las variables al inicio del <script>:
+     - herName, myName
+     - yesMessage
+     - planChips (array de 3 textos, ej. "Cena 🍝")
+     - noMessages (array de 8 textos, uno por cada clic en "No")
+
+  2. FOTOS: Pon las imágenes en public/assets/:
+     - Carpeta:  public/assets/
+     - Archivos: 1.jpg, 2.jpg, 3.jpg ... 8.jpg
+     - URL:      https://tudominio.com/san-valentin (o /san-valentin.html)
+     - Si no cargan, se muestran corazones de respaldo.
+
+  3. MÚSICA: Pon el MP3 en public/assets/music.mp3 y en el <audio>:
+     <source src="/assets/music.mp3" type="audio/mpeg" />
+     La música solo se reproduce al hacer clic en "Activar música 🎵" (sin autoplay).
+  -->
+</body>
+</html>
